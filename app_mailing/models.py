@@ -3,6 +3,22 @@ from django.db import models
 from app_users.models import User
 
 
+NULLABLE = {'blank': True, 'null': True}
+
+
+class Client(models.Model):
+    email = models.EmailField(max_length=50, verbose_name='почта')
+    full_name = models.CharField(max_length=128, verbose_name='ФИО')
+    comment = models.TextField(**NULLABLE)
+
+    def __str__(self):
+        return f'{self.email} {self.full_name}'
+
+    class Meta:
+        verbose_name = 'клиент'
+        verbose_name_plural = 'клиенты'
+
+
 class Message(models.Model):
     """Mailing message that sends to users."""
     title = models.CharField(max_length=128, verbose_name='заголовок')
@@ -37,8 +53,7 @@ class Mailing(models.Model):
                               choices=PERIODICITY_STATUS,
                               verbose_name='статус', default='created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    recipients = models.ManyToManyField(User)
-
+    recipients = models.ManyToManyField(Client)
 
     def __str__(self):
         return f'{self.time}--{self.periodicity}--{self.status}: {self.message}'
