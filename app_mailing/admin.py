@@ -6,7 +6,7 @@ from app_mailing.models import Client, Mailing, Message, MailingTry
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('email', 'full_name', 'comment')
-    list_filter = ('email', 'full_name')
+    list_filter = ('email',)
     search_fields = ('email', 'full_name', 'comment')
 
 

@@ -8,8 +8,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 class Client(models.Model):
     email = models.EmailField(max_length=50, verbose_name='почта')
-    full_name = models.CharField(max_length=128, verbose_name='ФИО')
-    comment = models.TextField(**NULLABLE)
+    full_name = models.CharField(max_length=128, verbose_name='фио')
+    comment = models.TextField(**NULLABLE, verbose_name='комментарий')
 
     def __str__(self):
         return f'{self.email} {self.full_name}'
@@ -23,6 +23,7 @@ class Message(models.Model):
     """Mailing message that sends to users."""
     title = models.CharField(max_length=128, verbose_name='заголовок')
     body = models.TextField(verbose_name='тело сообщения')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
 
     def __str__(self):
         return f'{self.title}'
@@ -52,8 +53,8 @@ class Mailing(models.Model):
     status = models.CharField(max_length=8,
                               choices=PERIODICITY_STATUS,
                               verbose_name='статус', default='created')
-    message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    recipients = models.ManyToManyField(Client)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение')
+    recipients = models.ManyToManyField(Client, verbose_name='клиенты')
 
     def __str__(self):
         return f'{self.time}--{self.periodicity}--{self.status}: {self.message}'
@@ -70,12 +71,12 @@ class MailingTry(models.Model):
         ('Err', 'Ошибка')
     ]
 
-    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='рассылка')
     try_datetime = models.DateTimeField(auto_now_add=True, verbose_name='время попытки')
     try_status = models.CharField(max_length=3,
                                   choices=MAILING_TRY_STATUS,
                                   verbose_name='статус')
-    mail_service_response = models.TextField()
+    mail_service_response = models.TextField(verbose_name='ответ почтового сервиса')
 
     def __str__(self):
         return f'{self.try_datetime}--{self.try_status}--{self.mailing}: {self.mail_service_response}'
