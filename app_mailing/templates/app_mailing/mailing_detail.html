@@ -1,0 +1,45 @@
+{% extends 'app_mailing/base.html' %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">{{ object.name }}</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-2"><strong>Время рассылки:</strong> {{ object.time }}</p>
+      <p class="lead mb-2"><strong>Периодичность:</strong>
+            {% if object.periodicity == 'day' %}
+            Раз в день
+            {% elif object.periodicity == 'week' %}
+            Раз в неделю
+            {% else %}
+            Раз в месяц
+            {% endif %}
+      </p>
+      <p class="lead mb-2"><strong>Статус:</strong>
+          {% if object.status == 'created' %}
+          <span class="card-text mb-auto" style="color: grey;">Создана</span>
+          {% elif object.status == 'launched' %}
+          <span class="card-text mb-auto" style="color: green;">Активна</span>
+          {% else %}
+          <span class="card-text mb-auto" style="color: red;">Завершена</span>
+          {% endif %}
+      </p>
+
+      <p class="lead mb-2"><strong>Заголовок сообщения:</strong> {{ object.message.title }}</p>
+      <p class="lead mb-2"><strong>Тело сообщения:</strong> {{ object.message.body }}</p>
+      <p class="lead mb-2"><strong>Получатели:</strong> {{ object.recipients.all|join:", " }}</p>
+      <br>
+
+
+
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="#"><button type="button" class="btn btn-primary btn-lg px-4 gap-3">Изменить</button></a>
+          <a href="#"><button type="button" class="btn btn-outline-danger btn-lg px-4">Удалить</button></a>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

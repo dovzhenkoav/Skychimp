@@ -13,7 +13,7 @@ class Client(models.Model):
     comment = models.TextField(**NULLABLE, verbose_name='комментарий')
 
     def __str__(self):
-        return f'{self.email} {self.full_name}'
+        return f'{self.email}'
 
     class Meta:
         verbose_name = 'клиент'
@@ -47,6 +47,7 @@ class Mailing(models.Model):
         ('launched', 'запущена')
     ]
 
+    name = models.CharField(max_length=50, verbose_name='имя рассылки')
     time = models.TimeField(verbose_name='время рассылки')
     periodicity = models.CharField(max_length=5,
                                    choices=PERIODICITY_CHOICES,
@@ -58,7 +59,7 @@ class Mailing(models.Model):
     recipients = models.ManyToManyField(Client, verbose_name='клиенты')
 
     def __str__(self):
-        return f'{self.time}--{self.periodicity}--{self.status}: {self.message}'
+        return f'{self.name}--{self.time}--{self.periodicity}--{self.status}'
 
     class Meta:
         verbose_name = 'рассылка'
