@@ -57,3 +57,12 @@ class MessageUpdateView(generic.UpdateView):
     template_name = 'app_mailing/message_create.html'
     form_class = MessageForm
     success_url = reverse_lazy('app_mailing:message_list')
+
+
+class MessageDeleteView(generic.DeleteView):
+    model = Message
+    success_url = reverse_lazy('app_mailing:message_list')
+    template_name = 'app_mailing/message_delete.html'
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)

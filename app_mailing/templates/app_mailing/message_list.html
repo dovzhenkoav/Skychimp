@@ -23,8 +23,12 @@
         <div class="col p-4 d-flex flex-column position-static">
           <h3 class="mb-0">{{ object.title }}</h3>
           <p class="card-text mb-auto">{{ object.body }}</p>
-          <a href="{% url 'app_mailing:message_update' object.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
+          <a href="{% url 'app_mailing:message_update' object.pk %}" class="icon-link gap-1 icon-link-hover">
             Изменить
+            <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+          </a>
+          <a href="{% url 'app_mailing:message_delete' object.pk %}" class="icon-link gap-1 icon-link-hover" style="color: red;">
+            Удалить
             <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
           </a>
 
