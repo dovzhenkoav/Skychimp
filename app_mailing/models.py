@@ -1,5 +1,7 @@
 from django.db import models
 
+from app_users.models import User
+
 
 class Message(models.Model):
     """Mailing message that sends to users."""
@@ -35,6 +37,8 @@ class Mailing(models.Model):
                               choices=PERIODICITY_STATUS,
                               verbose_name='статус', default='created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
+    recipients = models.ManyToManyField(User)
+
 
     def __str__(self):
         return f'{self.time}--{self.periodicity}--{self.status}: {self.message}'

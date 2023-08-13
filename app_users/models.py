@@ -14,7 +14,6 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=50, verbose_name='фамилия')
     surname = models.CharField(max_length=50, verbose_name='отчество')
 
-    comment = models.CharField(max_length=128, verbose_name='комментарий', **NULLABLE)
     is_active = models.BooleanField(default=False, verbose_name='активен')
 
     USERNAME_FIELD = 'email'
