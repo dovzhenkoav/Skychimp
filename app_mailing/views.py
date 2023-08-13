@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse('Hello')
+    return render(request, template_name='app_mailing/index.html')
