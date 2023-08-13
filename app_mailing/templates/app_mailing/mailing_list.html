@@ -4,14 +4,17 @@
 
 {% block content %}
 
-<div class="d-inline-flex gap-2 mb-5 ">
+{% include 'app_mailing/includes/inc_mailing_navbar.html' %}
+
+<div class="container">
+<div class="gap-2 mb-4 d-flex align-items-center justify-content-center">
   <a href="{% url 'app_mailing:mailing_create' %}">
       <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
         Создать рассылку
       </button>
   </a>
 </div>
-
+</div>
 
 <div class="row mb-3">
   {% for object in object_list %}
@@ -38,7 +41,7 @@
           {% endif %}
 
           <a href="{% url 'app_mailing:mailing_detail' object.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
-            Открыть
+            Подробнее
             <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
           </a>
         </div>
