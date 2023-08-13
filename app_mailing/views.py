@@ -33,6 +33,14 @@ class MailingCreateView(generic.CreateView):
     success_url = reverse_lazy('app_mailing:mailing_list')
 
 
+class MailingUpdateView(generic.UpdateView):
+    model = Mailing
+    template_name = 'app_mailing/mailing_create.html'
+    form_class = MailingForm
+    success_url = reverse_lazy('app_mailing:mailing_list')
+
+
+
 class MessageList(generic.ListView):
     model = Message
     template_name = 'app_mailing/message_list.html'
