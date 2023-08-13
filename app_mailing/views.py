@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from app_mailing.forms import MailingForm
-from app_mailing.models import Mailing
+from app_mailing.models import Mailing, Message, MailingTry
 
 
 def index(request):
@@ -31,3 +31,8 @@ class MailingCreateView(generic.CreateView):
     template_name = 'app_mailing/mailing_create.html'
     form_class = MailingForm
     success_url = reverse_lazy('app_mailing:mailing_list')
+
+
+class MessageList(generic.ListView):
+    model = Message
+    template_name = 'app_mailing/message_list.html'
