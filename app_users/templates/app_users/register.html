@@ -7,9 +7,9 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Save">Войти</input>
+        <input type="submit" value="Save">Готово</input>
     </form>
 </div>
-<a href="{% url 'app_users:recover_password' %}">Забыли пароль?</a>
+
 
 {% endblock %}

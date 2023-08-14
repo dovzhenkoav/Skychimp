@@ -18,7 +18,7 @@
     <a href="{% url 'app_users:logout' %}"><button type="button" class="btn btn-outline-primary me-2">Logout</button></a>
     {% else %}
     <a href="{% url 'app_users:login' %}"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-    <a href="#"><button type="button" class="btn btn-primary">Sign-up</button></a>
+    <a href="{% url 'app_users:register' %}"><button type="button" class="btn btn-primary">Sign-up</button></a>
     {% endif %}
   </div>
 </header>

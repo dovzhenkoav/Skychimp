@@ -18,3 +18,13 @@ def send_registration_email(user_email: str, verification_code: str):
         settings.EMAIL_HOST_USER,
         [user_email]
     )
+
+
+def send_recover_password_email(user_email: str, new_password: str):
+    send_mail(
+        'Завершение регистрации',
+        f'Изменение пароля для {user_email}! \n'
+        f'Новый пароль для входа: {new_password}',
+        settings.EMAIL_HOST_USER,
+        [user_email]
+    )

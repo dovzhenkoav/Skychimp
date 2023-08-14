@@ -15,6 +15,7 @@ class User(AbstractUser):
     surname = models.CharField(max_length=50, verbose_name='отчество')
 
     is_active = models.BooleanField(default=False, verbose_name='активен')
+    verify_code = models.CharField(max_length=4, verbose_name='код подтверждения', **NULLABLE)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
