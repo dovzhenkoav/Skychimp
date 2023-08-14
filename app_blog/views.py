@@ -11,3 +11,9 @@ class BlogListView(generic.ListView):
 class BlogDetailView(generic.DetailView):
     model = BlogPost
     template_name = 'app_blog/blog_detail.html'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.view_counter += 1
+        self.object.save()
+        return self.object
