@@ -1,10 +1,37 @@
 {% extends 'app_mailing/base.html' %}
 
-{% block title %}Главная{% endblock %}
+{% load mediapath %}
+
+{% block title %}Блог{% endblock %}
 
 
 {% block content %}
+{% for object in object_list %}
 
-<h1>Sample text</h1>
+<div class="container">
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.8)), url({% mediapath object.image %});; background-size: cover;">
 
+    <div class="col-lg-6 px-0" style="color: white;">
+      <h1 class="display-4 fst-italic">{{ object.title }}</h1>
+      <p class="lead my-3">{{ object.text|truncatechars:100 }}</p>
+        <br>
+      <p class="my-1 small">Просмотров: {{ object.view_counter }}</p>
+      <p class="my-1 small">Создано: {{ object.publication_date }}</p>
+      <p class="lead mb-0"><a href="#" class="text-body-white fw-bold" style="color: white;">Продолжить читать...</a></p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endfor %}
 {% endblock %}
