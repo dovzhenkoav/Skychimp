@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,23 +11,40 @@ def index(request):
     return render(request, template_name='app_mailing/index.html')
 
 
-class MailingListView(generic.ListView):
+class MailingListView(LoginRequiredMixin, generic.ListView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Mailing
     template_name = 'app_mailing/mailing_list.html'
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(author=self.request.user)
+        return queryset
 
-class MailingDetailView(generic.DetailView):
+
+class MailingDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Mailing
     template_name = 'app_mailing/mailing_detail.html'
 
 
-class MailingDeleteView(generic.DeleteView):
+class MailingDeleteView(LoginRequiredMixin, generic.DeleteView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Mailing
     success_url = reverse_lazy('app_mailing:mailing_list')
     template_name = 'app_mailing/mailing_delete.html'
 
 
-class MailingCreateView(generic.CreateView):
+class MailingCreateView(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Mailing
     template_name = 'app_mailing/mailing_create.html'
     form_class = MailingForm
@@ -39,20 +57,41 @@ class MailingCreateView(generic.CreateView):
             new_form.save()
         return super().form_valid(form)
 
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields['recipients'].queryset = Client.objects.filter(
+            author=self.request.user
+        )
+        return form
 
-class MailingUpdateView(generic.UpdateView):
+
+class MailingUpdateView(LoginRequiredMixin, generic.UpdateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Mailing
     template_name = 'app_mailing/mailing_create.html'
     form_class = MailingForm
     success_url = reverse_lazy('app_mailing:mailing_list')
 
 
-class MessageListView(generic.ListView):
+class MessageListView(LoginRequiredMixin, generic.ListView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Message
     template_name = 'app_mailing/message_list.html'
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(author=self.request.user)
+        return queryset
 
-class MessageCreateView(generic.CreateView):
+
+class MessageCreateView(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Message
     template_name = 'app_mailing/message_create.html'
     form_class = MessageForm
@@ -66,25 +105,42 @@ class MessageCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-class MessageUpdateView(generic.UpdateView):
+class MessageUpdateView(LoginRequiredMixin, generic.UpdateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Message
     template_name = 'app_mailing/message_create.html'
     form_class = MessageForm
     success_url = reverse_lazy('app_mailing:message_list')
 
 
-class MessageDeleteView(generic.DeleteView):
+class MessageDeleteView(LoginRequiredMixin, generic.DeleteView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Message
     success_url = reverse_lazy('app_mailing:message_list')
     template_name = 'app_mailing/message_delete.html'
 
 
-class ClientListView(generic.ListView):
+class ClientListView(LoginRequiredMixin, generic.ListView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Client
     template_name = 'app_mailing/client_list.html'
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(author=self.request.user)
+        return queryset
 
-class ClientCreateView(generic.CreateView):
+
+class ClientCreateView(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Client
     template_name = 'app_mailing/client_create.html'
     form_class = ClienteForm
@@ -98,14 +154,20 @@ class ClientCreateView(generic.CreateView):
         return super().form_valid(form)
 
 
-class ClientUpdateView(generic.UpdateView):
+class ClientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Client
     template_name = 'app_mailing/client_update.html'
     form_class = ClienteForm
     success_url = reverse_lazy('app_mailing:client_list')
 
 
-class ClientDeleteView(generic.DeleteView):
+class ClientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
     model = Client
     success_url = reverse_lazy('app_mailing:client_list')
     template_name = 'app_mailing/client_delete.html'
