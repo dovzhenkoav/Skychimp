@@ -6,16 +6,16 @@ from app_mailing.models import Mailing, Message, Client
 class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = '__all__'
+        exclude = ['author']
 
 
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ['author']
 
 
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ['author']

@@ -32,6 +32,13 @@ class MailingCreateView(generic.CreateView):
     form_class = MailingForm
     success_url = reverse_lazy('app_mailing:mailing_list')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            new_form = form.save()
+            new_form.author = self.request.user
+            new_form.save()
+        return super().form_valid(form)
+
 
 class MailingUpdateView(generic.UpdateView):
     model = Mailing
@@ -50,6 +57,13 @@ class MessageCreateView(generic.CreateView):
     template_name = 'app_mailing/message_create.html'
     form_class = MessageForm
     success_url = reverse_lazy('app_mailing:message_list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_form = form.save()
+            new_form.author = self.request.user
+            new_form.save()
+        return super().form_valid(form)
 
 
 class MessageUpdateView(generic.UpdateView):
@@ -75,6 +89,13 @@ class ClientCreateView(generic.CreateView):
     template_name = 'app_mailing/client_create.html'
     form_class = ClienteForm
     success_url = reverse_lazy('app_mailing:client_list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_form = form.save()
+            new_form.author = self.request.user
+            new_form.save()
+        return super().form_valid(form)
 
 
 class ClientUpdateView(generic.UpdateView):

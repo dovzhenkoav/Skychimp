@@ -11,6 +11,7 @@ class Client(models.Model):
     email = models.EmailField(max_length=50, verbose_name='почта')
     full_name = models.CharField(max_length=128, verbose_name='фио')
     comment = models.TextField(**NULLABLE, verbose_name='комментарий')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Создатель')
 
     def __str__(self):
         return f'{self.email}'
@@ -24,7 +25,7 @@ class Message(models.Model):
     """Mailing message that sends to users."""
     title = models.CharField(max_length=128, verbose_name='заголовок')
     body = models.TextField(verbose_name='тело сообщения')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Создатель')
 
     def __str__(self):
         return f'{self.title}'
@@ -55,6 +56,7 @@ class Mailing(models.Model):
     status = models.CharField(max_length=8,
                               choices=PERIODICITY_STATUS,
                               verbose_name='статус', default='created')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Создатель')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение')
     recipients = models.ManyToManyField(Client, verbose_name='клиенты')
 
