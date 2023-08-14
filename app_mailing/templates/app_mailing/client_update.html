@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'app_mailing/base.html' %}
 
-</body>
-</html>
+{% block title %}{{ object.email }}{% endblock %}
+
+{% block content %}
+
+
+<form method="post" >
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" value="Save">Сохранить</button>
+</form>
+
+{% endblock %}

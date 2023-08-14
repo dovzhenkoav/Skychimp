@@ -64,9 +64,6 @@ class MessageDeleteView(generic.DeleteView):
     success_url = reverse_lazy('app_mailing:message_list')
     template_name = 'app_mailing/message_delete.html'
 
-    def get(self, *args, **kwargs):
-        return self.post(*args, **kwargs)
-
 
 class ClientListView(generic.ListView):
     model = Client
@@ -80,3 +77,14 @@ class ClientCreateView(generic.CreateView):
     success_url = reverse_lazy('app_mailing:client_list')
 
 
+class ClientUpdateView(generic.UpdateView):
+    model = Client
+    template_name = 'app_mailing/client_update.html'
+    form_class = ClienteForm
+    success_url = reverse_lazy('app_mailing:client_list')
+
+
+class ClientDeleteView(generic.DeleteView):
+    model = Client
+    success_url = reverse_lazy('app_mailing:client_list')
+    template_name = 'app_mailing/client_delete.html'
