@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -5,10 +7,21 @@ from django.views import generic
 
 from app_mailing.forms import MailingForm, MessageForm, ClienteForm
 from app_mailing.models import Mailing, Message, MailingTry, Client
+from app_blog.models import BlogPost
 
 
 def index(request):
-    return render(request, template_name='app_mailing/index.html')
+    all_mailing_counter = len(Mailing.objects.all())
+    active_mailing_counter = len(Mailing.objects.filter(status='launched'))
+    unique_client_counter = len(Client.objects.all().distinct('email'))
+    random_blogposts = BlogPost.objects.order_by("?")[:3]
+    context = {
+        'all_mailing_counter': all_mailing_counter,
+        'active_mailing_counter': active_mailing_counter,
+        'unique_client_counter': unique_client_counter,
+        'random_blogposts': random_blogposts,
+    }
+    return render(request, template_name='app_mailing/index.html', context=context)
 
 
 class MailingListView(LoginRequiredMixin, generic.ListView):
