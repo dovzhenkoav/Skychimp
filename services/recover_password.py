@@ -6,6 +6,7 @@ from services.email import send_recover_password_email
 
 
 def create_password() -> str:
+    """Creates 12-digits password."""
     password = ''
     password += ''.join([random.choice(string.digits) for i in range(3)])
     password += ''.join([random.choice(string.ascii_lowercase) for i in range(3)])
@@ -15,6 +16,7 @@ def create_password() -> str:
 
 
 def user_set_random_password(user: User):
+    """Sets new user password."""
     new_password = create_password()
     user.set_password(new_password)
     user.save()

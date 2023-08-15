@@ -6,6 +6,7 @@ from services.email import send_mailing_message
 
 
 def make_mailing_try(mailing: Mailing):
+    """Try to sand mail to recipients."""
     message = Message.objects.get(pk=mailing.message.pk)
     title = message.title
     body = message.body
@@ -27,6 +28,7 @@ def make_mailing_try(mailing: Mailing):
 
 
 def mailing_schedule():
+    """Mailing logic. Search active mailing and try to send message if it's time."""
     active_mailings = Mailing.objects.filter(status='launched')
     for mailing in active_mailings:
         if mailing.time <= datetime.now().time():
@@ -53,6 +55,7 @@ def mailing_schedule():
 
 
 def start():
+    """Add background tasks and execute them."""
     scheduler = BackgroundScheduler()
     scheduler.add_job(mailing_schedule, 'interval', minutes=1, id='1')
     scheduler.start()

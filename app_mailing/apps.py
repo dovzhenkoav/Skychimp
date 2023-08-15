@@ -6,6 +6,7 @@ class AppMailingConfig(AppConfig):
     name = 'app_mailing'
 
     def ready(self):
+        """Starts background tasks."""
         from app_mailing import scheduler
         scheduler.start()
 

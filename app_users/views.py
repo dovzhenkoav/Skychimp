@@ -16,7 +16,7 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('app_users:register_confirmation')
 
     def form_valid(self, form):
-
+        """Send verification code after registration."""
         if form.is_valid():
             new_form = form.save()
             new_form.verify_code = get_verification_code()
@@ -32,6 +32,7 @@ class UserRegisterConfirmationView(generic.TemplateView):
 
 
 def verify_view(request, code):
+    """Verify user profile and makes it active."""
     user = User.objects.get(verify_code=str(code))
     user.is_active = True
     user.verify_code = 'NULL'
@@ -40,6 +41,7 @@ def verify_view(request, code):
 
 
 def recover_password_view(request):
+    """User forget password page. Can set another password to user. And send email with new password."""
     if request.method == 'POST':
         recover_form = RecoverPasswordForm(request.POST)
         if recover_form.is_valid():

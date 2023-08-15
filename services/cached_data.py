@@ -5,6 +5,7 @@ from app_blog.models import BlogPost
 
 
 def get_cached_post_datail(context):
+    """Get cached post data if exists."""
     if settings.CACHE_ENABLED:
         key = f'post_datail{context.object.pk}'
         post = cache.get(key)

@@ -11,6 +11,7 @@ from app_blog.models import BlogPost
 
 
 def index(request):
+    """Main page with statistics."""
     all_mailing_counter = len(Mailing.objects.all())
     active_mailing_counter = len(Mailing.objects.filter(status='launched'))
     unique_client_counter = len(Client.objects.all().distinct('email'))
@@ -25,6 +26,7 @@ def index(request):
 
 
 class MailingListView(LoginRequiredMixin, generic.ListView):
+    """User can view his mailings."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -38,6 +40,7 @@ class MailingListView(LoginRequiredMixin, generic.ListView):
 
 
 class MailingDetailView(LoginRequiredMixin, generic.DetailView):
+    """User can view details about his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -46,6 +49,7 @@ class MailingDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class MailingDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """User can delete his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -55,6 +59,7 @@ class MailingDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class MailingCreateView(LoginRequiredMixin, generic.CreateView):
+    """User can create new mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -79,6 +84,7 @@ class MailingCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class MailingUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """USer can update his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -89,6 +95,7 @@ class MailingUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class MailingTryListView(LoginRequiredMixin, generic.ListView):
+    """User can view statistic about his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -107,6 +114,7 @@ class MailingTryListView(LoginRequiredMixin, generic.ListView):
 
 
 class MessageListView(LoginRequiredMixin, generic.ListView):
+    """User can view his created messages for mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -120,6 +128,7 @@ class MessageListView(LoginRequiredMixin, generic.ListView):
 
 
 class MessageCreateView(LoginRequiredMixin, generic.CreateView):
+    """User can create new message for his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -137,6 +146,7 @@ class MessageCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class MessageUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """User can update message for his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -147,6 +157,7 @@ class MessageUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class MessageDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """User can delete message for his mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -156,6 +167,7 @@ class MessageDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 class ClientListView(LoginRequiredMixin, generic.ListView):
+    """User can view his clients."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -169,6 +181,7 @@ class ClientListView(LoginRequiredMixin, generic.ListView):
 
 
 class ClientCreateView(LoginRequiredMixin, generic.CreateView):
+    """User can create new clients for mailing."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -186,6 +199,7 @@ class ClientCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class ClientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """User can update clients."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
@@ -196,6 +210,7 @@ class ClientUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class ClientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """User can delete clients."""
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"
 
