@@ -1,0 +1,56 @@
+{% extends 'app_mailing/base.html' %}
+
+{% block title %}Рассылки{% endblock %}
+
+{% block content %}
+
+{% include 'app_manager/includes/inc_mailing_navbar.html' %}
+
+<div class="container">
+<div class="gap-2 mb-4 d-flex align-items-center justify-content-center">
+</div>
+</div>
+
+<div class="row mb-3">
+  {% for object in object_list %}
+    <div class="col-md-4">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3 class="mb-0">{{ object.name }}</h3>
+          <div class="mb-1 text-body-secondary">{{ с.time }}</div>
+          <p class="card-text mb-auto">
+            {% if object.periodicity == 'day' %}
+            Раз в день
+            {% elif object.periodicity == 'week' %}
+            Раз в неделю
+            {% else %}
+            Раз в месяц
+            {% endif %}
+          </p>
+
+          {% if object.status == 'created' %}
+          <p class="card-text mb-auto" style="color: grey;">Создана</p>
+          {% elif object.status == 'launched' %}
+          <p class="card-text mb-auto" style="color: green;">Активна</p>
+          {% else %}
+          <p class="card-text mb-auto" style="color: red;">Завершена</p>
+          {% endif %}
+          <p class="card-text mb-auto"">Создатель: {{ object.author }}</p>
+
+          <h5>{{ object.message.title }}</h5>
+          <text>{{ object.message.body }}</text>
+
+          <a href="{% url 'app_manager:stop_mailing' object.pk %}" class="icon-link gap-1 icon-link-hover" style="color: red;">
+            Остановить рассылку
+          </a>
+
+
+        </div>
+
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+
+{% endblock %}

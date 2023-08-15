@@ -1,0 +1,14 @@
+{% extends 'app_mailing/base.html' %}
+
+{% block title %}{{ object.email }}{% endblock %}
+
+{% block content %}
+
+
+<form method="post" >
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" value="Save">Сохранить</button>
+</form>
+
+{% endblock %}

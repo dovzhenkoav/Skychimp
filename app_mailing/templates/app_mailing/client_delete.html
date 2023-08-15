@@ -1,0 +1,22 @@
+{% extends 'app_mailing/base.html' %}
+
+{% block title %}Удалить {{ object.email }}?{% endblock %}
+
+{% block content %}
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Удалить {{ object.name }}?</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">После удаления данные восстановить невозможно!</p>
+      <p class="lead mb-4">Вы уверены?</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a href="{% url 'app_mailing:client_list' %}"><button type="submit" value="Reject" class="btn btn-primary btn-lg px-4 gap-3">Не удалять</button></a>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" value="Confirm" class="btn btn-outline-danger btn-lg px-4">Удалить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

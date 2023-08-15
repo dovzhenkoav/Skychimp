@@ -1,0 +1,60 @@
+{% extends 'app_mailing/base.html' %}
+
+{% load mediapath %}
+
+{% block title %}Главная{% endblock %}
+
+
+{% block content %}
+<div class="container px-4 py-5" id="hanging-icons">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Созданных рассылок: {{ all_mailing_counter }} </h3>
+
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Активных рассылок: {{ active_mailing_counter }}</h3>
+
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Уникальных клиентов: {{ unique_client_counter }}</h3>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% if random_blogposts %}
+{% for object in random_blogposts %}
+<div class="container">
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.8)), url({% mediapath object.image %});; background-size: cover;">
+
+    <div class="col-lg-6 px-0" style="color: white;">
+      <h1 class="display-4 fst-italic">{{ object.title }}</h1>
+      <p class="lead my-3">{{ object.text|truncatechars:300 }}</p>
+        <br>
+      <p class="my-1 small">Просмотров: {{ object.view_counter }}</p>
+      <p class="my-1 small">Создано: {{ object.publication_date }}</p>
+      <p class="lead mb-0"><a href="{% url 'app_blog:blog_detail' object.pk %}" class="text-body-white fw-bold" style="color: white;">Читать...</a></p>
+    </div>
+
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
