@@ -29,26 +29,27 @@ def make_mailing_try(mailing: Mailing):
 def mailing_schedule():
     active_mailings = Mailing.objects.filter(status='launched')
     for mailing in active_mailings:
-        last_mailing_try = MailingTry.objects.filter(mailing=mailing.pk).order_by('-try_datetime')[:1]
-        if last_mailing_try:
-            last_mailing_try = last_mailing_try.get()
-            last_mailing_try_date = last_mailing_try.try_datetime
-            time_now = datetime.now(timezone.utc)
+        if mailing.time <= datetime.now().time():
+            last_mailing_try = MailingTry.objects.filter(mailing=mailing.pk).order_by('-try_datetime')[:1]
+            if last_mailing_try:
+                last_mailing_try = last_mailing_try.get()
+                last_mailing_try_date = last_mailing_try.try_datetime
+                time_now = datetime.now(timezone.utc)
 
-            if mailing.periodicity == 'day':
-                time_difference = time_now - last_mailing_try_date
-                if time_difference.days >= 1:
-                    make_mailing_try(mailing)
-            elif mailing.periodicity == 'week':
-                time_difference = time_now - last_mailing_try_date
-                if time_difference.days >= 7:
-                    make_mailing_try(mailing)
+                if mailing.periodicity == 'day':
+                    time_difference = time_now - last_mailing_try_date
+                    if time_difference.days >= 1:
+                        make_mailing_try(mailing)
+                elif mailing.periodicity == 'week':
+                    time_difference = time_now - last_mailing_try_date
+                    if time_difference.days >= 7:
+                        make_mailing_try(mailing)
+                else:
+                    time_difference = time_now - last_mailing_try_date
+                    if time_difference.days >= 30:
+                        make_mailing_try(mailing)
             else:
-                time_difference = time_now - last_mailing_try_date
-                if time_difference.days >= 30:
-                    make_mailing_try(mailing)
-        else:
-            pass
+                pass
 
 
 def start():
