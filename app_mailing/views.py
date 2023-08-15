@@ -77,6 +77,9 @@ class MailingCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
+        form.fields['message'].queryset = Message.objects.filter(
+            author=self.request.user
+        )
         form.fields['recipients'].queryset = Client.objects.filter(
             author=self.request.user
         )
