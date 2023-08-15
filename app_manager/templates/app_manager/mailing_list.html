@@ -4,15 +4,10 @@
 
 {% block content %}
 
-{% include 'app_mailing/includes/inc_mailing_navbar.html' %}
+{% include 'app_manager/includes/inc_mailing_navbar.html' %}
 
 <div class="container">
 <div class="gap-2 mb-4 d-flex align-items-center justify-content-center">
-  <a href="{% url 'app_mailing:mailing_create' %}">
-      <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-        Создать рассылку
-      </button>
-  </a>
 </div>
 </div>
 
@@ -22,7 +17,7 @@
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <h3 class="mb-0">{{ object.name }}</h3>
-          <div class="mb-1 text-body-secondary">{{ object.time }}</div>
+          <div class="mb-1 text-body-secondary">{{ с.time }}</div>
           <p class="card-text mb-auto">
             {% if object.periodicity == 'day' %}
             Раз в день
@@ -32,6 +27,7 @@
             Раз в месяц
             {% endif %}
           </p>
+
           {% if object.status == 'created' %}
           <p class="card-text mb-auto" style="color: grey;">Создана</p>
           {% elif object.status == 'launched' %}
@@ -39,13 +35,16 @@
           {% else %}
           <p class="card-text mb-auto" style="color: red;">Завершена</p>
           {% endif %}
+          <p class="card-text mb-auto"">Создатель: {{ object.author }}</p>
 
-          <a href="{% url 'app_mailing:mailing_detail' object.pk %}" class="icon-link gap-1 icon-link-hover">
-            Подробнее
+          <h5>{{ object.message.title }}</h5>
+          <text>{{ object.message.body }}</text>
+
+          <a href="{% url 'app_manager:stop_mailing' object.pk %}" class="icon-link gap-1 icon-link-hover" style="color: red;">
+            Остановить рассылку
           </a>
-          <a href="{% url 'app_mailing:mailing_try_list' object.pk %}" class="icon-link gap-1 icon-link-hover">
-            Статистика
-          </a>
+
+
         </div>
 
       </div>
