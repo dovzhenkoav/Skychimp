@@ -88,6 +88,24 @@ class MailingUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy('app_mailing:mailing_list')
 
 
+class MailingTryListView(LoginRequiredMixin, generic.ListView):
+    login_url = reverse_lazy('app_users:login')
+    redirect_field_name = "redirect_to"
+
+    model = MailingTry
+    template_name = 'app_mailing/mailing_try_list.html'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = MailingTry.objects.filter(mailing=self.kwargs.get('pk')).order_by('-try_datetime')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['mailing'] = Mailing.objects.get(pk=self.kwargs.get('pk'))
+        return context_data
+
+
 class MessageListView(LoginRequiredMixin, generic.ListView):
     login_url = reverse_lazy('app_users:login')
     redirect_field_name = "redirect_to"

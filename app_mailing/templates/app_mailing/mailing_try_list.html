@@ -1,0 +1,31 @@
+{% extends 'app_mailing/base.html' %}
+
+{% block title %}Статистика рассылки{% endblock %}
+
+{% include 'app_mailing/includes/inc_mailing_navbar.html' %}
+
+{% block content %}
+<div class="container">
+<h2 class="mt-4">Статистика для рассылки: {{ mailing.name }}</h2>
+</div>
+{% if object_list %}
+{% for object in object_list %}
+
+<div class="container">
+<div class="row mb-3 text-center">
+      <div class="col-4 themed-grid-col">{{ object.try_datetime }}</div>
+      <div class="col-4 themed-grid-col">{{ object.try_status }}</div>
+      <div class="col-4 themed-grid-col">{{ object.mail_service_response }}</div>
+    </div>
+</div>
+
+{% endfor %}
+{% else %}
+<div class="container">
+    <p class="mt-4">Рассылка не проводилась ни разу</p>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
