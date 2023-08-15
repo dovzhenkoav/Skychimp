@@ -28,3 +28,12 @@ def send_recover_password_email(user_email: str, new_password: str):
         settings.EMAIL_HOST_USER,
         [user_email]
     )
+
+
+def send_mailing_message(title: str, body: str, recipients: list['str']):
+    send_mail(
+        f'{title}',
+        f'{body}',
+        settings.EMAIL_HOST_USER,
+        recipients
+    )

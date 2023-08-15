@@ -8,3 +8,4 @@ class AppMailingConfig(AppConfig):
     def ready(self):
         from app_mailing import scheduler
         scheduler.start()
+
