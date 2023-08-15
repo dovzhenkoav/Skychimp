@@ -40,10 +40,10 @@
           <p class="card-text mb-auto" style="color: red;">Завершена</p>
           {% endif %}
 
-          <a href="{% url 'app_mailing:mailing_detail' object.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
+          <a href="{% url 'app_mailing:mailing_detail' object.pk %}" class="icon-link gap-1 icon-link-hover">
             Подробнее
           </a>
-          <a href="{% url 'app_mailing:mailing_try_list' object.pk %}" class="icon-link gap-1 icon-link-hover stretched-link">
+          <a href="{% url 'app_mailing:mailing_try_list' object.pk %}" class="icon-link gap-1 icon-link-hover">
             Статистика
           </a>
         </div>

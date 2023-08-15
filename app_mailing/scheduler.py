@@ -53,5 +53,5 @@ def mailing_schedule():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(mailing_schedule, 'interval', seconds=5, id='1')
+    scheduler.add_job(mailing_schedule, 'interval', minutes=1, id='1')
     scheduler.start()
